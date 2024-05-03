@@ -51,26 +51,15 @@ class MongoDBConnection:
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    connection = MongoDBConnection("localhost", 27017, "username", "password", "mydatabase")
+    connection = MongoDBConnection("localhost", 27017, "", "", "StoreDB_Distri")
     connection.connect()
 
     # Select example
-    query = {"name": "John"}
+    '''
+    query = {"name": "Juan"}
     result = connection.select("users", query)
     for document in result:
-        print(document)
-
-    # Insert example
-    document = {"name": "Jane", "age": 25}
-    connection.insert("users", document)
-
-    # Update example
-    query = {"name": "John"}
-    update = {"$set": {"age": 30}}
-    connection.update("users", query, update)
-
-    # Delete example
-    query = {"name": "Jane"}
-    connection.delete("users", query)
-
+        print(document.get("name"))
+    '''
+    
     connection.disconnect()

@@ -1,0 +1,6 @@
+# Archivo de requisitos para Python
+
+# Paquetes principales
+Flask==3.0.3
+pymongo==4.7.1
+# Paquetes adicionales

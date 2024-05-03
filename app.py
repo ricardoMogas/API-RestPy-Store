@@ -7,12 +7,23 @@ productos = [
     {"id": 1, "nombre": "Producto 1", "precio": 10.0},
     {"id": 2, "nombre": "Producto 2", "precio": 20.0}
 ]
+
 @app.route('/')
 def index():
     return "API de productos"
 
+# Ruta para iniciar sesión
+@app.route('/login', methods=['POST'])
+def login():
+    usuario = request.json
+    if usuario['user'] == 'root' and usuario['password'] == '123':
+        return jsonify({'mensaje': 'Inicio de sesión correcto'})
+    else:
+        return jsonify({'mensaje': 'Inicio de sesión incorrecto'}), 401
+
+
 # Ruta para obtener todos los productos
-@app.route('/productos', methods=['GET'])
+@app.route('/products', methods=['GET'])
 def obtener_productos():
     return jsonify(productos)
 

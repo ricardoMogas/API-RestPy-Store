@@ -1,5 +1,6 @@
 ### API STORE WITH PYTHON
 
 ## Ejecution 
-- ejecutar entorno virtual: myenv\Scripts\activate
+- ejecutar entorno virtual: env\Scripts\activate
+- intalar: pip install -r requirements.txt
 - ejecutar proyecto: app.py
