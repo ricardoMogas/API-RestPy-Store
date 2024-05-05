@@ -1,4 +1,5 @@
 from core.dbConexion import dbConexion
+from bson.objectid import ObjectId
 import json
 connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
 
@@ -16,8 +17,65 @@ class ProductsDAO:
                 "name": item["name"],
                 "description": item["description"],
                 "image": item["image"],
-                "cost": item["cost"],
+                "price": item["price"],
                 "stock": item["stock"]
             }
             products.append(product)
         return products
+    
+    def GetProductsById(self, productId):
+        connection.connect()
+        query = {"_id": ObjectId(productId)}
+        result = connection.select("products", query)
+        if result is not None:
+            result_list = list(result)
+            if len(result_list) > 0:
+                connection.disconnect()
+                return result_list[0]  
+            else:
+                connection.disconnect()
+                return None 
+        else:
+            connection.disconnect()
+        return None
+    
+    def RegisterProduct(self,name, description, image, price, stock):
+        connection.connect()
+        query = {
+                "name": name,
+                "description": description,
+                "image": image,
+                "price": price,
+                "stock": stock
+            }
+        result = connection.insert("products", query)
+        connection.disconnect()
+        return result.acknowledged
+    
+    def DeleteProduct(self, product_id):
+        connection.connect()
+        query = {"_id": ObjectId(product_id)}
+        result = connection.delete("products", query)
+        connection.disconnect()
+        return result.deleted_count > 0
+
+    def UpdateProduct(self, productId, name=None, description=None, image=None, price=None, stock=None):
+        connection.connect()
+        query = {"_id": ObjectId(productId)}
+        updateQuery = {"$set": {}}
+
+        if name is not None:
+            updateQuery["$set"]["name"] = name
+        if description is not None:
+            updateQuery["$set"]["description"] = description
+        if image is not None:
+            updateQuery["$set"]["image"] = image
+        if price is not None:
+            updateQuery["$set"]["price"] = price
+        if stock is not None:
+            updateQuery["$set"]["stock"] = stock
+        
+        result = connection.update("products", query, updateQuery)
+        connection.disconnect()
+        return result.acknowledged
+

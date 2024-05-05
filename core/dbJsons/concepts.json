@@ -1,0 +1,16 @@
+[
+    {
+        "saleId": "05/663718fe88cffad56cc07cb7/2024",
+        "productId": "663718fe88cffad56cc07cb7",
+        "quantity":3,
+        "price": 300,
+        "import": 900
+    },
+    {
+        "saleId": "05/05/2024",
+        "productId": "663718fe88cffad56cc07cb7",
+        "import": "66372448875540f3ae048a86",
+        "quantity":3,
+        "price": 300
+    }
+]

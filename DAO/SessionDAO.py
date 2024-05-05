@@ -47,7 +47,21 @@ class SessionDAO:
         result = connection.insert("users", query)
         connection.disconnect()
         return result.acknowledged
-
+    
+    def GetUsersAll(self):
+        connection.connect()
+        result = connection.select("users", {})
+        users = []
+        for item in result:
+            usur = {
+                "id": str(item["_id"]),
+                "name": item["name"],
+                "email": item["email"],
+                "password": item["password"],
+                "cart": item["cart"],
+            }
+            users.append(usur)
+        return users
 
 
 
