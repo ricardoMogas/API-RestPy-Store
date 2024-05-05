@@ -17,12 +17,12 @@ def login():
     data = request.json
     username = data["username"]
     password = data["password"]
-    session = SessionController()
+    session = SessionDAO()
     if session.login(username, password):
         return jsonify({"status": True, "message": "Inicio de sesión exitoso"}), 200
     else:
         return jsonify({"status": False, "message": "Inicio de sesión fallido: contraseña o usuario incorrecto"}), 400
-    
+
 
 # Ruta para obtener todos los productos
 @app.route('/register', methods=['POST'])
@@ -31,7 +31,7 @@ def user_register():
     name = data["username"]
     email = data["email"]
     password = data["password"]
-    session = SessionController()
+    session = SessionDAO()
     if session.existName(name) and session.existEmail(email):
         return jsonify({"status": False, "message": "Ya existe ese usuario o email"}), 400
 
@@ -48,13 +48,6 @@ def GetProducts():
     else:
         return jsonify({"status":True, "data": result}), 200
 
-@app.route('/saleProduct', methods=['GET'])
-def saleProduct():
-    return jsonify({"status": True, "message": "Producto vendido"}), 200
-
-@app.route('/addProduct', methods=['POST'])
-def addProduct():
-    return jsonify({"status": True, "message": "Producto agregado"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
