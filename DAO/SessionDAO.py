@@ -43,8 +43,8 @@ class SessionController:
         
     def register(self, username, email, password):
         connection.connect()
-        document = {"name": username, "email": email, "password": password, "cart": []}
-        result = connection.insert("users", document)
+        query = {"name": username, "email": email, "password": password, "cart": []}
+        result = connection.insert("users", query)
         connection.disconnect()
         return result.acknowledged
 

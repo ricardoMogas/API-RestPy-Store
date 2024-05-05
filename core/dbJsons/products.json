@@ -3,14 +3,14 @@
         "name": "PC armada",
         "description": "Una pc armada con componentes de alta calidad",
         "image":"image.jpg",
-        "const":23,
+        "price":23,
         "stock": 5
     },
     {
         "name": "Monitor 24 pulgadas",
         "description": "maria@example.com",
         "image":"image.jpg",
-        "const":23,
+        "price":23,
         "stock": 5
     }
 ]

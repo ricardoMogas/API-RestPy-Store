@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from bson.objectid import ObjectId
-from controllers.SessionController import SessionController
-from controllers.ProductsDAO import ProductsDAO
+from DAO.SessionDAO import SessionController
+from DAO.ProductsDAO import ProductsDAO
 from bson.json_util import dumps
 app = Flask(__name__)
 
@@ -51,6 +51,10 @@ def GetProducts():
 @app.route('/saleProduct', methods=['GET'])
 def saleProduct():
     return jsonify({"status": True, "message": "Producto vendido"}), 200
+
+@app.route('/addProduct', methods=['POST'])
+def addProduct():
+    return jsonify({"status": True, "message": "Producto agregado"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
