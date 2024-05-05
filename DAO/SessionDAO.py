@@ -1,7 +1,7 @@
 from core.dbConexion import dbConexion
 connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
 
-class SessionController:
+class SessionDAO:
     def __init__(self, session = None):
         self.session = session
 
