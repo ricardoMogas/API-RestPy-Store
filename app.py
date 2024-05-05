@@ -1,66 +1,56 @@
 from flask import Flask, jsonify, request
-
+from bson.objectid import ObjectId
+from controllers.SessionController import SessionController
+from controllers.ProductsDAO import ProductsDAO
+from bson.json_util import dumps
 app = Flask(__name__)
 
-# Datos de ejemplo
-productos = [
-    {"id": 1, "nombre": "Producto 1", "precio": 10.0},
-    {"id": 2, "nombre": "Producto 2", "precio": 20.0}
-]
 
 @app.route('/')
 def index():
     return "API de productos"
 
+
 # Ruta para iniciar sesión
 @app.route('/login', methods=['POST'])
 def login():
-    usuario = request.json
-    if usuario['user'] == 'root' and usuario['password'] == '123':
-        return jsonify({'mensaje': 'Inicio de sesión correcto'})
+    data = request.json
+    username = data["username"]
+    password = data["password"]
+    session = SessionController()
+    if session.login(username, password):
+        return jsonify({"status": True, "message": "Inicio de sesión exitoso"}), 200
     else:
-        return jsonify({'mensaje': 'Inicio de sesión incorrecto'}), 401
-
+        return jsonify({"status": False, "message": "Inicio de sesión fallido: contraseña o usuario incorrecto"}), 400
+    
 
 # Ruta para obtener todos los productos
-@app.route('/products', methods=['GET'])
-def obtener_productos():
-    return jsonify(productos)
+@app.route('/register', methods=['POST'])
+def user_register():
+    data = request.get_json()
+    name = data["username"]
+    email = data["email"]
+    password = data["password"]
+    session = SessionController()
+    if session.existName(name) and session.existEmail(email):
+        return jsonify({"status": False, "message": "Ya existe ese usuario o email"}), 400
 
-# Ruta para obtener un producto por su ID
-@app.route('/productos/<int:producto_id>', methods=['GET'])
-def obtener_producto(producto_id):
-    producto = next((p for p in productos if p['id'] == producto_id), None)
-    if producto:
-        return jsonify(producto)
+    result = session.register(name, email, password)
+    return jsonify({"status": result, "message:": "Registro completo"}), 201
+
+
+@app.route('/GetAllProducts', methods=['GET'])
+def GetProducts():
+    products = ProductsDAO()
+    result = products.GetProducts()
+    if result is None:
+        return jsonify({"status": False, "message": "No hay productos"}), 404
     else:
-        return jsonify({'mensaje': 'Producto no encontrado'}), 404
+        return jsonify({"status":True, "data": result}), 200
 
-# Ruta para agregar un nuevo producto
-@app.route('/productos', methods=['POST'])
-def agregar_producto():
-    nuevo_producto = request.json
-    productos.append(nuevo_producto)
-    return jsonify({'mensaje': 'Producto agregado correctamente'}), 201
-
-# Ruta para actualizar un producto existente
-@app.route('/productos/<int:producto_id>', methods=['PUT'])
-def actualizar_producto(producto_id):
-    producto_actualizado = request.json
-    for i, p in enumerate(productos):
-        if p['id'] == producto_id:
-            productos[i] = producto_actualizado
-            return jsonify({'mensaje': 'Producto actualizado correctamente'})
-    return jsonify({'mensaje': 'Producto no encontrado'}), 404
-
-# Ruta para eliminar un producto
-@app.route('/productos/<int:producto_id>', methods=['DELETE'])
-def eliminar_producto(producto_id):
-    for i, p in enumerate(productos):
-        if p['id'] == producto_id:
-            del productos[i]
-            return jsonify({'mensaje': 'Producto eliminado correctamente'})
-    return jsonify({'mensaje': 'Producto no encontrado'}), 404
+@app.route('/saleProduct', methods=['GET'])
+def saleProduct():
+    return jsonify({"status": True, "message": "Producto vendido"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

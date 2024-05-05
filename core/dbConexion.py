@@ -1,6 +1,7 @@
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
-class MongoDBConnection:
+class dbConexion:
     def __init__(self, host, port, username, password, database):
         self.host = host
         self.port = port
@@ -50,16 +51,30 @@ class MongoDBConnection:
             print(f"Error executing delete query: {e}")
 
 # Ejemplo de uso
+"""
 if __name__ == "__main__":
-    connection = MongoDBConnection("localhost", 27017, "", "", "StoreDB_Distri")
+    connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
     connection.connect()
 
     # Select example
-    '''
     query = {"name": "Juan"}
     result = connection.select("users", query)
     for document in result:
         print(document.get("name"))
-    '''
+
+
+    # insert example
+    document = {"name": "test4", "email": "test4@example.com", "password": "1234", "cart": []}
+    result = connection.insert("users", document)
+    print(result.acknowledged)
+
+
+    # update example
+    # query = {"_id": ObjectId("6635a9f9d069d60327f1ca50")}
+    # update = {"$set": {"password": "321"}}
+    # result = connection.update("users", query, update)
+    # print(result)
+
     
     connection.disconnect()
+"""
