@@ -28,9 +28,9 @@ class SessionDAO:
                 return False
 
 
-    def login(self, username, password):
+    def login(self, email, password):
         connection.connect()
-        query = {"name": username, "password": password}
+        query = {"email": email, "password": password}
         result = connection.select("users", query)
         if result is not None:
             result_list = list(result)

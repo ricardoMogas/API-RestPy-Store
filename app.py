@@ -16,13 +16,13 @@ def index():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
-    username = data["username"]
+    email = data["email"]
     password = data["password"]
     session = SessionDAO()
-    if session.login(username, password):
+    if session.login(email, password):
         return jsonify({"status": True, "message": "Inicio de sesión exitoso"}), 200
     else:
-        return jsonify({"status": False, "message": "Inicio de sesión fallido: contraseña o usuario incorrecto"}), 400
+        return jsonify({"status": False, "message": "Inicio de sesión fallido: contraseña o correo incorrecto"}), 400
 
 
 # Ruta para obtener todos los productos
