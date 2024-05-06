@@ -33,17 +33,36 @@ class SalesDAO:
             
         return result.acknowledged
     
-    def GetSaleOfCustomer(self,userId):
+    def GetSaleOfCustomer(self, userId):
         connection.connect()
         query = {"userId": userId}
         result = connection.select("sales", query)
-        saleCustomer = list()
         sales = list(result)
+        listSales = []
+
         for sale in sales:
             query2 = {"saleId": sale["_id"]}
             result2 = connection.select("concepts", query2)
-            conceptos = list(result2)
-            for concept in conceptos:
-                
-        return result_list
+            concepts = list(result2)
+            saleInfo = {
+                "_id": sale["_id"],
+                "Datetime": sale["Datetime"],
+                "total": sale["total"],
+                "concepts": []
+            }
+
+            for concept in concepts:
+                products = ProductsDAO()
+                product = products.GetProductsById(concept["productId"])
+                conceptInfo = {
+                    "product": product["name"],
+                    "image": product["image"],
+                    "description": product["description"],
+                    "quantity": concept["quantity"],
+                    "import": concept["import"]
+                }
+                saleInfo["concepts"].append(conceptInfo)
+            listSales.append(saleInfo)
+        return listSales
+
         

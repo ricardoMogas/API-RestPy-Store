@@ -69,6 +69,15 @@ def DeleteProducts():
     else:
         return jsonify({"status":True, "data": result}), 200
     
+@app.route('/DeleteProduct', methods=['DELETE'])
+def UpdateProducts():
+    data = request.get_json()
+    products = ProductsDAO()
+    result = products.UpdateProduct(data["id"])
+    if result is None:
+        return jsonify({"status": False, "message": "No se actualizo producto"}), 404
+    else:
+        return jsonify({"status":True, "data": result}), 200
     
 if __name__ == '__main__':
     app.run(debug=True)
