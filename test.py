@@ -19,8 +19,9 @@ if __name__ == "__main__":
     #result = usuarios.GetUsersAll()
     #print(result)
     
-    #producto = ProductsDAO()
-    #result = producto.RegisterProduct("Xbox", "Xbox one con 1tb", "xbox.png", 3000, 4)
+    producto = ProductsDAO()
+    result = producto.RegisterProduct("Targeta Grafica GT 710", "Targeta de video con 2gb de vram ddr3 muy util para pc de oficina y de uso ligero", "xbox.png", 1999, 5)
+    print(result)
     #result = producto.UpdateProduct("6637cd15e24066094544c72e", name= "playstation")
     #result = producto.GetProductsById("6637cd15e24066094544c72e")
     #print(result["name"])
