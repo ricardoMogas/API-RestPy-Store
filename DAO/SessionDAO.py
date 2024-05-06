@@ -1,4 +1,5 @@
 from core.dbConexion import dbConexion
+from bson.objectid import ObjectId
 connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
 
 class SessionDAO:
@@ -62,6 +63,22 @@ class SessionDAO:
             }
             users.append(usur)
         return users
+    
+    def GetUserById(self, userId):
+        connection.connect()
+        query = {"_id": ObjectId(userId)}
+        result = connection.select("users", query)
+        if result is not None:
+            result_list = list(result)
+            if len(result_list) > 0:
+                connection.disconnect()
+                return result_list[0]  
+            else:
+                connection.disconnect()
+                return None 
+        else:
+            connection.disconnect()
+        return None
 
 
 

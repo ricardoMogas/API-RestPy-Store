@@ -48,6 +48,26 @@ def GetProducts():
     else:
         return jsonify({"status":True, "data": result}), 200
 
-
+@app.route('/RegisterProduct', methods=['POST'])
+def RegisterProducts():
+    data = request.get_json()
+    products = ProductsDAO()
+    result = products.RegisterProduct(data["name"], data["description"], data["image"], data["price"], data["stock"])
+    if result is None:
+        return jsonify({"status": False, "message": "Error"}), 404
+    else:
+        return jsonify({"status":True, "data": result}), 200
+    
+@app.route('/DeleteProduct', methods=['DELETE'])
+def DeleteProducts():
+    data = request.get_json()
+    products = ProductsDAO()
+    result = products.DeleteProduct(data["id"])
+    if result is None:
+        return jsonify({"status": False, "message": "No hay producto"}), 404
+    else:
+        return jsonify({"status":True, "data": result}), 200
+    
+    
 if __name__ == '__main__':
     app.run(debug=True)

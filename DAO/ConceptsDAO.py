@@ -15,7 +15,7 @@ class ConceptsDAO:
                 "saleId": str(item["saleId"]),
                 "productId": item["productId"],
                 "import": item["import"],
-                "quantity": item["cuantity"],
+                "quantity": item["quantity"],
                 "price": item["price"]
             }
             concepts.append(concept)
