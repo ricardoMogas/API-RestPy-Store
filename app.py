@@ -59,21 +59,20 @@ def RegisterProducts():
     else:
         return jsonify({"status":True, "data": result}), 200
     
-@app.route('/DeleteProduct', methods=['DELETE'])
-def DeleteProducts():
-    data = request.get_json()
+@app.route('/DeleteProduct/<product_id>', methods=['DELETE'])
+def DeleteProducts(product_id):
     products = ProductsDAO()
-    result = products.DeleteProduct(data["id"])
+    result = products.DeleteProduct(product_id)
     if result is None:
         return jsonify({"status": False, "message": "No hay producto"}), 404
     else:
         return jsonify({"status":True, "data": result}), 200
     
-@app.route('/DeleteProduct', methods=['DELETE'])
+@app.route('/UpdateProduct', methods=['PUT'])
 def UpdateProducts():
     data = request.get_json()
     products = ProductsDAO()
-    result = products.UpdateProduct(data["id"])
+    result = products.UpdateProduct(data["id"], data["name"], data["description"], data["image"], data["price"], data["stock"])
     if result is None:
         return jsonify({"status": False, "message": "No se actualizo producto"}), 404
     else:
