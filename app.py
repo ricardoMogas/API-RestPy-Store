@@ -91,7 +91,7 @@ def GetSuppliers():
         return jsonify({"status":True, "data": result}), 200
 
 @app.route('/RegisterSuppliers', methods=['POST'])
-def RegisterProducts():
+def RegisterSuppliers():
     data = request.get_json()
     supplier = SuppliersDAO()
     result = supplier.RegisterSupplier(data["name"], data["gmail"], data["number"], data["address"])
@@ -101,7 +101,7 @@ def RegisterProducts():
         return jsonify({"status":True, "data": result}), 200
     
 @app.route('/DeleteSupplier/<supplierId>', methods=['DELETE'])
-def DeleteProducts(supplierId):
+def DeleteSupplier(supplierId):
     supplier = SuppliersDAO()
     result = supplier.DeleteSupplier(supplierId)
     if result is None:
@@ -110,7 +110,7 @@ def DeleteProducts(supplierId):
         return jsonify({"status":True, "data": result}), 200
     
 @app.route('/UpdateSupplier', methods=['PUT'])
-def UpdateProducts():
+def UpdateSupplier():
     data = request.get_json()
     supplier = SuppliersDAO()
     result = supplier.UpdateSupplier(data["id"], data["name"], data["email"], data["number"], data["address"])
@@ -120,7 +120,7 @@ def UpdateProducts():
         return jsonify({"status":True, "data": result}), 200
 
 @app.route('/GetSalesCustomer', methods=['GET'])
-def GetSales():
+def GetSalesCustomer():
     data = request.get_json()
     sales = SalesDAO()
     result = sales.GetSaleOfCustomer(data["userId"])
@@ -130,7 +130,7 @@ def GetSales():
         return jsonify({"status":True, "data": result}), 200
     
 @app.route('/RegisterSales', methods=['POST'])
-def RegisterSaless():
+def RegisterSales():
     data = request.get_json()
     sales = SalesDAO()
     result = sales.RegisterSale(data["userId"], data["total"], data["concepts"])
