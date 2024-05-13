@@ -1,6 +1,7 @@
 from core.dbConexion import dbConexion
 from bson.objectid import ObjectId
 import json
+from DAO.SuppliersDAO import SuppliersDAO
 connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
 
 class ProductsDAO:
@@ -12,6 +13,7 @@ class ProductsDAO:
         result = connection.select("products", {})
         products = []
         for item in result:
+            result = SuppliersDAO().GetSupplierById(item["supplierId"])
             product = {
                 "id": str(item["_id"]),
                 "name": item["name"],
@@ -19,9 +21,11 @@ class ProductsDAO:
                 "image": item["image"],
                 "price": item["price"],
                 "stock": item["stock"],
-                "supplierId": item["supplierId"] 
+                "nameSupplier": result["name"],
+                "supplierId": item["supplierId"]
             }
             products.append(product)
+        connection.disconnect()
         return products
     
     def GetProductsById(self, productId):

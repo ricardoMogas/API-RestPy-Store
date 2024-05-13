@@ -37,14 +37,30 @@ class SessionDAO:
             result_list = list(result)
             if len(result_list) > 0:
                 connection.disconnect()
-                return result_list[0]["_id"] 
+                return True
             else:
                 connection.disconnect()
                 return None 
         else:
             connection.disconnect()
         return None
-        
+    
+    def GetUserByEmailPassword(self, email, password):
+        connection.connect()
+        query = {"email": email, "password": password}
+        result = connection.select("users", query)
+        if result is not None:
+            result_list = list(result)
+            if len(result_list) > 0:
+                connection.disconnect()
+                return result_list[0]
+            else:
+                connection.disconnect()
+                return None 
+        else:
+            connection.disconnect()
+        return None
+
     def register(self, username, email, password, rol):
         connection.connect()
         query = {"name": username, "email": email, "password": password,"rol": rol , "cart": []}

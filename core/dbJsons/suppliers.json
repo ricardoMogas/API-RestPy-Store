@@ -1,15 +1,20 @@
 [
-    {
-      "name": "Steren",
-      "email": "steren@hotmail.com",
-      "number": "982100402",
-      "address": "San Francisco, Campeche"
-    },
-    {
-      "name": "Intel",
-      "email": "Intel@hotmail.com",
-      "number": "982100431",
-      "address": "San Francisco, Campeche"
-    }
-  ]
-  
+  {
+    "name": "Steren",
+    "email": "steren@hotmail.com",
+    "number": "982100402",
+    "address": "San Francisco, Campeche"
+  },
+  {
+    "name": "Intel",
+    "email": "Intel@hotmail.com",
+    "number": "982100431",
+    "address": "San Francisco, Campeche"
+  },
+  {
+    "name": "Patito",
+    "email": "Patito@hotmail.com",
+    "number": "982100431",
+    "address": "San Francisco, Campeche"
+  }
+]

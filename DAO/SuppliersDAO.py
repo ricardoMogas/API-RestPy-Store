@@ -29,14 +29,11 @@ class SuppliersDAO:
         if result is not None:
             result_list = list(result)
             if len(result_list) > 0:
-                connection.disconnect()
                 return result_list[0]  
             else:
-                connection.disconnect()
                 return None 
         else:
-            connection.disconnect()
-        return None
+            return None
     
     def RegisterSupplier(self,name, email, number, address):
         connection.connect()

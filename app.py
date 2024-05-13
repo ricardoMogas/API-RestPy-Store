@@ -22,7 +22,14 @@ def login():
     password = data["password"]
     session = SessionDAO()
     if session.login(email, password):
-        return jsonify({"status": True, "message": "Inicio de sesión exitoso"}), 200
+        result = session.GetUserByEmailPassword(email, password)
+        return jsonify({
+            "status": True, 
+            "id": str(result["_id"]),
+            "name": result["name"],
+            "rol": result["rol"],
+            "message": "Inicio de sesión exitoso"
+        }), 200
     else:
         return jsonify({"status": False, "message": "Inicio de sesión fallido: contraseña o correo incorrecto"}), 400
 
@@ -71,7 +78,7 @@ def DeleteProducts(product_id):
     else:
         return jsonify({"status":True, "data": result}), 200
     
-@app.route('/UpdateProduct/', methods=['PUT'])
+@app.route('/UpdateProduct', methods=['PUT'])
 def UpdateProducts():
     data = request.get_json()
     products = ProductsDAO()
@@ -84,7 +91,7 @@ def UpdateProducts():
 @app.route('/GetAllSuppliers', methods=['GET'])
 def GetSuppliers():
     suppliers = SuppliersDAO()
-    result = suppliers.GetProducts()
+    result = suppliers.GetSuppliers()
     if result is None:
         return jsonify({"status": False, "message": "No hay proveedores"}), 404
     else:
@@ -119,11 +126,10 @@ def UpdateSupplier():
     else:
         return jsonify({"status":True, "data": result}), 200
 
-@app.route('/GetSalesCustomer', methods=['GET'])
-def GetSalesCustomer():
-    data = request.get_json()
+@app.route('/GetSalesCustomer/<userId>', methods=['GET'])
+def GetSalesCustomer(userId):
     sales = SalesDAO()
-    result = sales.GetSaleOfCustomer(data["userId"])
+    result = sales.GetSaleOfCustomer(userId)
     if result is None:
         return jsonify({"status": False, "message": "No hay compras"}), 404
     else:

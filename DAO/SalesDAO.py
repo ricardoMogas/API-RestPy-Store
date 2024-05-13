@@ -45,7 +45,7 @@ class SalesDAO:
             result2 = connection.select("concepts", query2)
             concepts = list(result2)
             saleInfo = {
-                "_id": sale["_id"],
+                "_id": str(sale["_id"]),
                 "Datetime": sale["Datetime"],
                 "total": sale["total"],
                 "concepts": []
