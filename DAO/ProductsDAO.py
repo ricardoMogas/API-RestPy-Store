@@ -18,7 +18,8 @@ class ProductsDAO:
                 "description": item["description"],
                 "image": item["image"],
                 "price": item["price"],
-                "stock": item["stock"]
+                "stock": item["stock"],
+                "supplierId": item["supplierId"] 
             }
             products.append(product)
         return products
@@ -39,14 +40,15 @@ class ProductsDAO:
             connection.disconnect()
         return None
     
-    def RegisterProduct(self,name, description, image, price, stock):
+    def RegisterProduct(self,name, description, image, price, stock, supplierId):
         connection.connect()
         query = {
                 "name": name,
                 "description": description,
                 "image": image,
                 "price": price,
-                "stock": stock
+                "stock": stock,
+                "supplierId": supplierId
             }
         result = connection.insert("products", query)
         connection.disconnect()
@@ -59,7 +61,7 @@ class ProductsDAO:
         connection.disconnect()
         return result.deleted_count > 0
 
-    def UpdateProduct(self, productId, name=None, description=None, image=None, price=None, stock=None):
+    def UpdateProduct(self, productId, name=None, description=None, image=None, price=None, stock=None, supplierId=None):
         connection.connect()
         query = {"_id": ObjectId(productId)}
         updateQuery = {"$set": {}}
@@ -74,8 +76,26 @@ class ProductsDAO:
             updateQuery["$set"]["price"] = price
         if stock is not None:
             updateQuery["$set"]["stock"] = stock
+        if supplierId is not None:
+            updateQuery["$set"]["supplierId"] = supplierId
         
         result = connection.update("products", query, updateQuery)
         connection.disconnect()
         return result.acknowledged
+    
+    def ProductsBySupplier(self, supplierId):
+        connection.connect()
+        query = {"supplierId": supplierId}
+        result = connection.select("products", query)
+        if result is not None:
+            result_list = list(result)
+            if len(result_list) > 0:
+                connection.disconnect()
+                return result_list  
+            else:
+                connection.disconnect()
+                return None 
+        else:
+            connection.disconnect()
+        return None
 

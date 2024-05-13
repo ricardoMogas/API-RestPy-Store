@@ -37,14 +37,17 @@ class SessionDAO:
             result_list = list(result)
             if len(result_list) > 0:
                 connection.disconnect()
-                return True
+                return result_list[0]["_id"] 
             else:
                 connection.disconnect()
-                return False
+                return None 
+        else:
+            connection.disconnect()
+        return None
         
-    def register(self, username, email, password):
+    def register(self, username, email, password, rol):
         connection.connect()
-        query = {"name": username, "email": email, "password": password, "cart": []}
+        query = {"name": username, "email": email, "password": password,"rol": rol , "cart": []}
         result = connection.insert("users", query)
         connection.disconnect()
         return result.acknowledged
@@ -59,7 +62,8 @@ class SessionDAO:
                 "name": item["name"],
                 "email": item["email"],
                 "password": item["password"],
-                "cart": item["cart"],
+                "rol": item["rol"],
+                "cart": item["cart"]
             }
             users.append(usur)
         return users
@@ -72,7 +76,7 @@ class SessionDAO:
             result_list = list(result)
             if len(result_list) > 0:
                 connection.disconnect()
-                return result_list[0]  
+                return result_list[0]
             else:
                 connection.disconnect()
                 return None 

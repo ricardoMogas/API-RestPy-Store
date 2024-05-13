@@ -4,13 +4,15 @@
         "description": "Una pc armada con componentes de alta calidad",
         "image":"image.jpg",
         "price":23,
-        "stock": 5
+        "stock": 5,
+        "supplierId": "6641121acd146ddc268c95d5"
     },
     {
         "name": "Monitor 24 pulgadas",
         "description": "maria@example.com",
         "image":"image.jpg",
         "price":23,
-        "stock": 5
+        "stock": 5,
+        "supplierId": "6641121acd146ddc268c95d5"
     }
 ]
