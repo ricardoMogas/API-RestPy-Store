@@ -1,34 +1,40 @@
 [
-    {
-      "name": "Juan",
-      "email": "juan@example.com",
-      "password": "1234",
-      "rol":2
-      ,"cart": [
-        {
-          "product_id": "607edf2b8dc2df56a46ea3d0",
-          "quantity": 2,
-          "total": 20
-        },
-        {
-          "product_id": "607edf2b8dc2df56a46ea3d1",
-          "quantity": 1,
-          "total": 20
-        }
-      ]
-    },
-    {
-      "name": "Ricardo",
-      "email": "Ricardo@example.com",
-      "password": "4321",
-      "rol": 1
-      ,"cart": [
-        {
-          "product_id": "607edf2b8dc2df56a46ea3d2",
-          "quantity": 1,
-          "total": 20
-        }
-      ]
-    }
-  ]
-  
+  {
+    "name": "Juan",
+    "email": "juan@example.com",
+    "password": "1234",
+    "rol": 2,
+    "cart": [
+      {
+        "product_id": "607edf2b8dc2df56a46ea3d0",
+        "quantity": 2,
+        "total": 20
+      },
+      {
+        "product_id": "607edf2b8dc2df56a46ea3d1",
+        "quantity": 1,
+        "total": 20
+      }
+    ]
+  },
+  {
+    "name": "Ricardo",
+    "email": "Ricardo@example.com",
+    "password": "4321",
+    "rol": 1,
+    "cart": [
+      {
+        "product_id": "607edf2b8dc2df56a46ea3d2",
+        "quantity": 1,
+        "total": 20
+      }
+    ]
+  },
+  {
+    "name": "ricardo",
+    "email": "ricardo@example.com",
+    "password": "1234",
+    "rol": 1,
+    "cart": []
+  }
+]

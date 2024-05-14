@@ -2,7 +2,8 @@ from core.dbConexion import dbConexion
 from bson.objectid import ObjectId
 import json
 from DAO.SuppliersDAO import SuppliersDAO
-connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
+from config import MONGODB_URI, DATABASE_NAME, PORT_NUMBER
+connection = dbConexion(MONGODB_URI, PORT_NUMBER, "", "", DATABASE_NAME)
 
 class ProductsDAO:
     def __init__(self):

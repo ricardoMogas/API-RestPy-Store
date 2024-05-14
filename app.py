@@ -101,7 +101,7 @@ def GetSuppliers():
 def RegisterSuppliers():
     data = request.get_json()
     supplier = SuppliersDAO()
-    result = supplier.RegisterSupplier(data["name"], data["gmail"], data["number"], data["address"])
+    result = supplier.RegisterSupplier(data["name"], data["email"], data["number"], data["address"])
     if result is None:
         return jsonify({"status": False, "message": "Error"}), 404
     else:
@@ -145,4 +145,4 @@ def RegisterSales():
     else:
         return jsonify({"status":True, "data": result}), 200
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
