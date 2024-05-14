@@ -1,6 +1,7 @@
 from core.dbConexion import dbConexion
 from bson.objectid import ObjectId
-connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
+from config import MONGODB_URI, DATABASE_NAME, PORT_NUMBER
+connection = dbConexion(MONGODB_URI, PORT_NUMBER, "", "", DATABASE_NAME)
 
 class SessionDAO:
     def __init__(self, session = None):
@@ -40,11 +41,30 @@ class SessionDAO:
                 return True
             else:
                 connection.disconnect()
-                return False
-        
-    def register(self, username, email, password):
+                return None 
+        else:
+            connection.disconnect()
+        return None
+    
+    def GetUserByEmailPassword(self, email, password):
         connection.connect()
-        query = {"name": username, "email": email, "password": password, "cart": []}
+        query = {"email": email, "password": password}
+        result = connection.select("users", query)
+        if result is not None:
+            result_list = list(result)
+            if len(result_list) > 0:
+                connection.disconnect()
+                return result_list[0]
+            else:
+                connection.disconnect()
+                return None 
+        else:
+            connection.disconnect()
+        return None
+
+    def register(self, username, email, password, rol):
+        connection.connect()
+        query = {"name": username, "email": email, "password": password,"rol": rol , "cart": []}
         result = connection.insert("users", query)
         connection.disconnect()
         return result.acknowledged
@@ -59,7 +79,8 @@ class SessionDAO:
                 "name": item["name"],
                 "email": item["email"],
                 "password": item["password"],
-                "cart": item["cart"],
+                "rol": item["rol"],
+                "cart": item["cart"]
             }
             users.append(usur)
         return users
@@ -72,7 +93,7 @@ class SessionDAO:
             result_list = list(result)
             if len(result_list) > 0:
                 connection.disconnect()
-                return result_list[0]  
+                return result_list[0]
             else:
                 connection.disconnect()
                 return None 

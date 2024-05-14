@@ -6,7 +6,8 @@ from DAO.ProductsDAO import ProductsDAO
 from DAO.ConceptsDAO import ConceptsDAO
 from DAO.SessionDAO import SessionDAO
 from typing import List
-connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
+from config import MONGODB_URI, DATABASE_NAME, PORT_NUMBER
+connection = dbConexion(MONGODB_URI, PORT_NUMBER, "", "", DATABASE_NAME)
 
 class SalesDAO:
     def __init__(self):
@@ -45,7 +46,7 @@ class SalesDAO:
             result2 = connection.select("concepts", query2)
             concepts = list(result2)
             saleInfo = {
-                "_id": sale["_id"],
+                "_id": str(sale["_id"]),
                 "Datetime": sale["Datetime"],
                 "total": sale["total"],
                 "concepts": []
