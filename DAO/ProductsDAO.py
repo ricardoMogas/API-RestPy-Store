@@ -22,7 +22,7 @@ class ProductsDAO:
                 "image": item["image"],
                 "price": item["price"],
                 "stock": item["stock"],
-                "nameSupplier": result["name"],
+                "nameSupplier": (result["name"] if result is not None else ""),
                 "supplierId": item["supplierId"]
             }
             products.append(product)
