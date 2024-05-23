@@ -7,7 +7,7 @@ from DAO.ConceptsDAO import ConceptsDAO
 from DAO.SessionDAO import SessionDAO
 from typing import List
 from config import MONGODB_URI, DATABASE_NAME, PORT_NUMBER
-connection = dbConexion(MONGODB_URI, PORT_NUMBER, "", "", DATABASE_NAME)
+connection = dbConexion(MONGODB_URI, DATABASE_NAME)
 
 class SalesDAO:
     def __init__(self):

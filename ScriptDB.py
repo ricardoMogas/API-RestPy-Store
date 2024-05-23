@@ -3,7 +3,7 @@ import json
 from config import MONGODB_URI, DATABASE_NAME, PORT_NUMBER
 
 # Datos de conexión a la base de datos
-client = pymongo.MongoClient("mongodb://"+MONGODB_URI+":"+str(PORT_NUMBER)+"/")
+client = pymongo.MongoClient("mongodb+srv://ricardoMogas:nmMfdujq7ZiFVWtG@cluster0.buubtnc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client[DATABASE_NAME]
 
 # Función para leer un archivo JSON

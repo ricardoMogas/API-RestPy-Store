@@ -1,7 +1,7 @@
 from core.dbConexion import dbConexion
 from bson.objectid import ObjectId
 from config import MONGODB_URI, DATABASE_NAME, PORT_NUMBER
-connection = dbConexion(MONGODB_URI, PORT_NUMBER, "", "", DATABASE_NAME)
+connection = dbConexion(MONGODB_URI, DATABASE_NAME)
 
 class SessionDAO:
     def __init__(self, session = None):

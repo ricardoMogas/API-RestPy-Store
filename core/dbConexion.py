@@ -2,79 +2,100 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 class dbConexion:
-    def __init__(self, host, port, username, password, database):
-        self.host = host
-        self.port = port
-        self.username = username
-        self.password = password
+    def __init__(self, uri, database):
+        self.uri = uri
         self.database = database
         self.client = None
         self.db = None
 
     def connect(self):
         try:
-            self.client = MongoClient(self.host, self.port, username=self.username, password=self.password)
+            self.client = MongoClient(self.uri)
             self.db = self.client[self.database]
-            print("Connected to MongoDB")
+            print(f"Connected to MongoDB, using database: {self.database}")
         except Exception as e:
             print(f"Error connecting to MongoDB: {e}")
 
     def disconnect(self):
         try:
-            self.client.close()
-            print("Disconnected from MongoDB")
+            if self.client:
+                self.client.close()
+                print("Disconnected from MongoDB")
         except Exception as e:
             print(f"Error disconnecting from MongoDB: {e}")
 
     def select(self, collection, query):
         try:
-            return self.db[collection].find(query)
+            if self.db is not None:
+                return self.db[collection].find(query)
+            else:
+                print("Error: Not connected to any database.")
+                return None
         except Exception as e:
             print(f"Error executing select query: {e}")
+            return None
 
     def insert(self, collection, document):
         try:
-            return self.db[collection].insert_one(document)
+            if self.db is not None:
+                return self.db[collection].insert_one(document)
+            else:
+                print("Error: Not connected to any database.")
+                return None
         except Exception as e:
             print(f"Error executing insert query: {e}")
+            return None
 
     def update(self, collection, query, update):
         try:
-            return self.db[collection].update_many(query, update)
+            if self.db is not None:
+                return self.db[collection].update_many(query, update)
+            else:
+                print("Error: Not connected to any database.")
+                return None
         except Exception as e:
             print(f"Error executing update query: {e}")
+            return None
 
     def delete(self, collection, query):
         try:
-            return self.db[collection].delete_many(query)
+            if self.db is not None:
+                return self.db[collection].delete_many(query)
+            else:
+                print("Error: Not connected to any database.")
+                return None
         except Exception as e:
             print(f"Error executing delete query: {e}")
+            return None
+
 
 # Ejemplo de uso
-"""
+'''
 if __name__ == "__main__":
-    connection = dbConexion("localhost", 27017, "", "", "StoreDB_Distri")
+    uri = "mongodb+srv://ricardoMogas:nmMfdujq7ZiFVWtG@cluster0.buubtnc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    db = "StoreDB_Distri"
+    connection = dbConexion(uri, db)
     connection.connect()
 
     # Select example
-    query = {"name": "Juan"}
+    query = {}
     result = connection.select("users", query)
-    for document in result:
-        print(document.get("name"))
+    if result is not None:
+        for document in result:
+            print(document)
+'''
 
+    # Insert example
+    # document = {"name": "test4", "email": "test4@example.com", "password": "1234", "cart": []}
+    # result = connection.insert("users", document)
+    # if result is not None:
+    #     print(result.acknowledged)
 
-    # insert example
-    document = {"name": "test4", "email": "test4@example.com", "password": "1234", "cart": []}
-    result = connection.insert("users", document)
-    print(result.acknowledged)
-
-
-    # update example
+    # Update example
     # query = {"_id": ObjectId("6635a9f9d069d60327f1ca50")}
     # update = {"$set": {"password": "321"}}
     # result = connection.update("users", query, update)
-    # print(result)
+    # if result is not None:
+    #     print(result.modified_count)
 
-    
-    connection.disconnect()
-"""
+    ## connection.disconnect()

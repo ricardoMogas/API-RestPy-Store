@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 import json
 from DAO.SuppliersDAO import SuppliersDAO
 from config import MONGODB_URI, DATABASE_NAME, PORT_NUMBER
-connection = dbConexion(MONGODB_URI, PORT_NUMBER, "", "", DATABASE_NAME)
+connection = dbConexion(MONGODB_URI, DATABASE_NAME)
 
 class ProductsDAO:
     def __init__(self):
